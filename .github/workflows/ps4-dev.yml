@@ -21,19 +21,22 @@ jobs:
           sudo apt -yq update
           sudo apt -yq install git build-essential cmake zip libgpgme11
 
-      - name: Install ps4 toolchain (Updated PacBrew method)
+      - name: Install ps4 toolchain (Updated PacBrew method - FIX 404)
         run: |
-          # 1. Adiciona a chave GPG do repositório PacBrew
-          sudo wget -O /usr/share/keyrings/pacbrew.gpg https://github.com/PacBrew/pacbrew-packages/releases/download/pacbrew-repo/pacbrew-keyring.gpg
+          # 1. Instala curl para manipulação de chaves
+          sudo apt -yq install curl
           
-          # 2. Adiciona o repositório PacBrew ao APT
+          # 2. Adiciona a chave GPG do repositório (Usando o novo link/método)
+          # A chave é baixada e registrada no diretório keyring para o APT
+          curl -sS https://pacbrew.github.io/pacbrew-packages/pacbrew-keyring.gpg | sudo gpg --dearmor -o /usr/share/keyrings/pacbrew.gpg
+          
+          # 3. Adiciona o repositório PacBrew ao APT
           echo "deb [signed-by=/usr/share/keyrings/pacbrew.gpg] https://pacbrew.github.io/pacbrew-packages/ stable main" | sudo tee /etc/apt/sources.list.d/pacbrew.list
           
-          # 3. Atualiza a lista de pacotes
+          # 4. Atualiza a lista de pacotes
           sudo apt -yq update
           
-          # 4. Instala o toolchain e as libs PS4 (ps4-openorbis e ps4-openorbis-portlibs)
-          # NOTA: O nome do pacote é 'ps4-openorbis' no novo repo.
+          # 5. Instala o toolchain e as libs PS4
           sudo apt -yq install ps4-openorbis ps4-openorbis-portlibs
 
       - name: Configure
