@@ -21,27 +21,25 @@ jobs:
           sudo apt -yq update
           sudo apt -yq install git build-essential cmake zip libgpgme11
 
-      - name: Install ps4 toolchain (Final Modern Method)
+      - name: Install ps4 toolchain (Manual File Creation)
         run: |
-          # 1. Instala utilitários necessários
-          sudo apt -yq install curl software-properties-common
+          # 1. Instala utilitários necessários (Garantindo que curl está lá)
+          sudo apt -yq install curl
           
-          # 2. Adiciona o repositório PacBrew diretamente com o formato DEB822
-          # Este método usa o comando 'add-apt-repository' que lida com a chave GPG automaticamente
-          # NOTA: O endereço do repositório é o 'deb' que havíamos identificado antes
-          sudo add-apt-repository "deb [signed-by=/usr/share/keyrings/pacbrew-keyring.gpg] https://pacbrew.github.io/pacbrew-packages/ stable main"
-          
-          # 3. Baixa e move a chave GPG para o local que o 'add-apt-repository' espera
-          # Tentaremos uma nova URL que parece ser a mais robusta no momento
+          # 2. Adiciona a chave GPG do repositório
+          # Usamos o método curl + gpg --dearmor que PAROU de falhar no passo anterior
           curl -fsSL https://pacbrew.github.io/pacbrew-packages/pacbrew-keyring.gpg | sudo gpg --dearmor -o /usr/share/keyrings/pacbrew-keyring.gpg
-
+          
+          # 3. Adiciona o repositório PacBrew ao APT (MANUALMENTE)
+          # Isso contorna o problema do 'add-apt-repository' e garante a sintaxe correta
+          echo "deb [signed-by=/usr/share/keyrings/pacbrew-keyring.gpg arch=amd64] https://pacbrew.github.io/pacbrew-packages/ stable main" | sudo tee /etc/apt/sources.list.d/pacbrew.list
+          
           # 4. Atualiza a lista de pacotes
           sudo apt -yq update
           
           # 5. Instala o toolchain e as libs PS4
-          # (Removendo o '--noconfirm' pois não é necessário no apt)
           sudo apt -yq install ps4-openorbis ps4-openorbis-portlibs
-
+          
       - name: Configure
         run: |
           cd $GITHUB_WORKSPACE
