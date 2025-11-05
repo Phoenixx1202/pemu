@@ -1,15 +1,14 @@
-name: ps4-release
+name: ps4-dev
 
 on:
-  push:
-    tags:
-      - "v*.*"
+  #push:
+  #  branches: [ dev ]
   workflow_dispatch:
 
 jobs:
 
-  build-ps4-release:
-    runs-on: ubuntu-22.04
+  build-ps4-dev:
+    runs-on: ubuntu-24.04
 
     steps:
       - uses: actions/checkout@v2
@@ -19,81 +18,42 @@ jobs:
       - name: Install build dependencies
         run: |
           sudo apt -yq update
-          sudo apt -yq install git build-essential cmake zip libgpgme11
-
-      - name: Install ps4 toolchain (Bypass APT - Direct .deb Install)
+          sudo apt -yq install git build-essential cmake zip \
+            pacman-package-manager makepkg libarchive-tools autoconf libtool \
+            cmake nasm git curl
+      - name: Install ps4 toolchain
         run: |
-          # 1. Instala utilitários necessários (Garantindo que curl está lá)
-          sudo apt -yq install wget curl 
-          
-          # 2. Define a URL de download do pacote ps4-openorbis - VERSÃO ATUALIZADA (0.1.0-5)
-          PS4_TOOLCHAIN_DEB="https://pacbrew.github.io/pacbrew-packages/pool/main/p/ps4-openorbis/ps4-openorbis_0.1.0-5_amd64.deb"
-          PS4_PORTLIBS_DEB="https://pacbrew.github.io/pacbrew-packages/pool/main/p/ps4-openorbis-portlibs/ps4-openorbis-portlibs_0.1.0-5_amd64.deb"
-          
-          # 3. Baixa e instala o toolchain ps4-openorbis
-          echo "Baixando toolchain ps4-openorbis..."
-          wget -O ps4-openorbis.deb "$PS4_TOOLCHAIN_DEB"
-          sudo dpkg -i ps4-openorbis.deb
-
-          # 4. Baixa e instala as portlibs
-          echo "Baixando portlibs ps4-openorbis-portlibs..."
-          wget -O ps4-portlibs.deb "$PS4_PORTLIBS_DEB"
-          sudo dpkg -i ps4-portlibs.deb
-          
-          # 5. Corrige dependências que podem ter quebrado no dpkg (comum)
-          sudo apt install -f -y
-          
-          # 6. Verifica a instalação (O toolchain deve estar em /opt/pacbrew/ps4/openorbis)
-          if [ -d "/opt/pacbrew/ps4/openorbis" ]; then
-            echo "Toolchain instalado com sucesso!"
-          else
-            echo "ERRO: O diretório do toolchain não foi encontrado após a instalação."
-            exit 1
-          fi
-          
+          sudo tee -a /etc/pacman.conf > /dev/null <<EOF
+          [pacbrew]
+          SigLevel = Optional TrustAll
+          Server = https://pacman.mydedibox.fr/pacbrew/packages/
+          EOF
+          sudo pacman -Syu
+          sudo pacman --noconfirm -S ps4-openorbis ps4-openorbis-portlibs
       - name: Configure
         run: |
           cd $GITHUB_WORKSPACE
           mkdir cmake-build && cd cmake-build
-          # A variável de ambiente OPENORBIS agora é setada automaticamente pelo PacBrew
-          # Mas vamos exportar para garantir que o seu CMake o encontre
-          export OPENORBIS=/opt/pacbrew/ps4/openorbis 
-          cmake -G "Unix Makefiles" -DPLATFORM_PS4=ON -DCMAKE_BUILD_TYPE=Release ..
-
+          export OPENORBIS=/opt/pacbrew/ps4/openorbis
+          cmake -G "Unix Makefiles" -DPLATFORM_PS4=ON -DCMAKE_BUILD_TYPE=Debug ..
       - name: Build pfbneo
         run: |
           cd $GITHUB_WORKSPACE/cmake-build
           make pfbneo.deps
-          make pfbneo_pkg
-          mv *.pkg $GITHUB_WORKSPACE
-
+          make -j"$(nproc)" pfbneo_pkg
       - name: Build pgen
         run: |
           cd $GITHUB_WORKSPACE/cmake-build
-          make pgen_pkg
-          mv *.pkg $GITHUB_WORKSPACE
-
+          make -j"$(nproc)" pgen_pkg
       - name: Build pnes
         run: |
           cd $GITHUB_WORKSPACE/cmake-build
-          make pnes_pkg
-          mv *.pkg $GITHUB_WORKSPACE
-
+          make -j"$(nproc)" pnes_pkg
       - name: Build psnes
         run: |
           cd $GITHUB_WORKSPACE/cmake-build
-          make psnes_pkg
-          mv *.pkg $GITHUB_WORKSPACE
-
+          make -j"$(nproc)" psnes_pkg
       - name: Build pgba
         run: |
           cd $GITHUB_WORKSPACE/cmake-build
-          make pgba_pkg
-          mv *.pkg $GITHUB_WORKSPACE
-
-      - name: Release
-        uses: softprops/action-gh-release@v1
-        if: startsWith(github.ref, 'refs/tags/')
-        with:
-          files: '*.pkg'
-          token: ${{ secrets.GITHUB_TOKEN }}
+          make -j"$(nproc)" pgba_pkg
