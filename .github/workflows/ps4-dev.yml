@@ -21,24 +21,37 @@ jobs:
           sudo apt -yq update
           sudo apt -yq install git build-essential cmake zip libgpgme11
 
-      - name: Install ps4 toolchain (Manual File Creation)
+      - name: Install ps4 toolchain (Bypass APT - Direct .deb Install)
         run: |
-          # 1. Instala utilitários necessários (Garantindo que curl está lá)
-          sudo apt -yq install curl
+          # 1. Instala utilitários necessários
+          sudo apt -yq install wget curl 
           
-          # 2. Adiciona a chave GPG do repositório
-          # Usamos o método curl + gpg --dearmor que PAROU de falhar no passo anterior
-          curl -fsSL https://pacbrew.github.io/pacbrew-packages/pacbrew-keyring.gpg | sudo gpg --dearmor -o /usr/share/keyrings/pacbrew-keyring.gpg
+          # 2. Define a URL de download do pacote ps4-openorbis
+          # Usaremos o link direto para o pacote que contém o toolchain.
+          # NOTA: O nome exato do arquivo pode mudar, mas vamos tentar um nome genérico
+          PS4_TOOLCHAIN_DEB="https://pacbrew.github.io/pacbrew-packages/pool/main/p/ps4-openorbis/ps4-openorbis_0.1.0-4_amd64.deb"
+          PS4_PORTLIBS_DEB="https://pacbrew.github.io/pacbrew-packages/pool/main/p/ps4-openorbis-portlibs/ps4-openorbis-portlibs_0.1.0-4_amd64.deb"
           
-          # 3. Adiciona o repositório PacBrew ao APT (MANUALMENTE)
-          # Isso contorna o problema do 'add-apt-repository' e garante a sintaxe correta
-          echo "deb [signed-by=/usr/share/keyrings/pacbrew-keyring.gpg arch=amd64] https://pacbrew.github.io/pacbrew-packages/ stable main" | sudo tee /etc/apt/sources.list.d/pacbrew.list
+          # 3. Baixa e instala o toolchain ps4-openorbis
+          echo "Baixando toolchain ps4-openorbis..."
+          wget -O ps4-openorbis.deb "$PS4_TOOLCHAIN_DEB"
+          sudo dpkg -i ps4-openorbis.deb
+
+          # 4. Baixa e instala as portlibs
+          echo "Baixando portlibs ps4-openorbis-portlibs..."
+          wget -O ps4-portlibs.deb "$PS4_PORTLIBS_DEB"
+          sudo dpkg -i ps4-portlibs.deb
           
-          # 4. Atualiza a lista de pacotes
-          sudo apt -yq update
+          # 5. Corrige dependências que podem ter quebrado no dpkg (comum)
+          sudo apt install -f -y
           
-          # 5. Instala o toolchain e as libs PS4
-          sudo apt -yq install ps4-openorbis ps4-openorbis-portlibs
+          # 6. Verifica a instalação (O toolchain deve estar em /opt/pacbrew/ps4/openorbis)
+          if [ -d "/opt/pacbrew/ps4/openorbis" ]; then
+            echo "Toolchain instalado com sucesso!"
+          else
+            echo "ERRO: O diretório do toolchain não foi encontrado após a instalação."
+            exit 1
+          fi
           
       - name: Configure
         run: |
