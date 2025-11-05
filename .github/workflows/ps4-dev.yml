@@ -23,14 +23,12 @@ jobs:
 
       - name: Install ps4 toolchain (Bypass APT - Direct .deb Install)
         run: |
-          # 1. Instala utilitários necessários
+          # 1. Instala utilitários necessários (Garantindo que curl está lá)
           sudo apt -yq install wget curl 
           
-          # 2. Define a URL de download do pacote ps4-openorbis
-          # Usaremos o link direto para o pacote que contém o toolchain.
-          # NOTA: O nome exato do arquivo pode mudar, mas vamos tentar um nome genérico
-          PS4_TOOLCHAIN_DEB="https://pacbrew.github.io/pacbrew-packages/pool/main/p/ps4-openorbis/ps4-openorbis_0.1.0-4_amd64.deb"
-          PS4_PORTLIBS_DEB="https://pacbrew.github.io/pacbrew-packages/pool/main/p/ps4-openorbis-portlibs/ps4-openorbis-portlibs_0.1.0-4_amd64.deb"
+          # 2. Define a URL de download do pacote ps4-openorbis - VERSÃO ATUALIZADA (0.1.0-5)
+          PS4_TOOLCHAIN_DEB="https://pacbrew.github.io/pacbrew-packages/pool/main/p/ps4-openorbis/ps4-openorbis_0.1.0-5_amd64.deb"
+          PS4_PORTLIBS_DEB="https://pacbrew.github.io/pacbrew-packages/pool/main/p/ps4-openorbis-portlibs/ps4-openorbis-portlibs_0.1.0-5_amd64.deb"
           
           # 3. Baixa e instala o toolchain ps4-openorbis
           echo "Baixando toolchain ps4-openorbis..."
