@@ -67,5 +67,6 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: ps4-emulator-builds
-          path: $GITHUB_WORKSPACE/cmake-build/*.pkg
+          # MUDANÇA PRINCIPAL AQUI: Adicionado '**/'
+          path: $GITHUB_WORKSPACE/cmake-build/**/*.pkg 
           if-no-files-found: error
