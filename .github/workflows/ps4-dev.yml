@@ -63,10 +63,15 @@ jobs:
           make -j"$(nproc)" pgba_pkg
       
       # --- NOVO PASSO ADICIONADO AQUI ---
+      - name: Listar arquivos de build (Debug)
+        run: |
+          echo "Listando o conteúdo de $GITHUB_WORKSPACE/cmake-build"
+          ls -R $GITHUB_WORKSPACE/cmake-build
+
+      # Passo de upload
       - name: Upload dos Pacotes .PKG
         uses: actions/upload-artifact@v4
         with:
           name: ps4-emulator-builds
-          # MUDANÇA PRINCIPAL AQUI: Adicionado '**/'
           path: $GITHUB_WORKSPACE/cmake-build/**/*.pkg 
           if-no-files-found: error
