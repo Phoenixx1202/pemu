@@ -1,10 +1,10 @@
 name: ps4-release
 
 on:
+  workflow_dispatch:
   push:
     tags:
       - "v*.*"
-  workflow_dispatch:
 
 jobs:
 
@@ -12,7 +12,7 @@ jobs:
     runs-on: ubuntu-24.04
 
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v4
         with:
           submodules: recursive
 
@@ -76,7 +76,7 @@ jobs:
         with:
           name: pemu-ps4-pkg
           path: *.pkg
-          if-no-files-found: error
+          if-no-files-found: warning
 
       - name: Release
         uses: softprops/action-gh-release@v1
