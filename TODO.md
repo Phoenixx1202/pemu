@@ -6,4 +6,4 @@ pFBA
 
 pSNES
 =====
-- take a look at MK2/MKU3 performance on switch
+- take a look at MK2/MKU3 performance on console

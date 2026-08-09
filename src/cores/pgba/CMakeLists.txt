@@ -12,9 +12,6 @@ add_subdirectory(${CMAKE_SOURCE_DIR}/external/cores/mgba build)
 set_property(TARGET mgba APPEND PROPERTY COMPILE_DEFINITIONS
         "_GNU_SOURCE;IOAPI_NO_64;USE_LIBZIP;HAVE_CRC32;COLOR_16_BIT;COLOR_5_6_5;DISABLE_THREADING"
 )
-if (PLATFORM_VITA)
-    set_property(TARGET mgba APPEND PROPERTY COMPILE_DEFINITIONS "PSP2")
-endif ()
 
 ##############
 # pgba
@@ -34,47 +31,12 @@ set(GBA_CFLAGS
 #####################
 # PLATFORM SPECIFIC
 #####################
-if (PLATFORM_VITA)
-    #####################
-    # PS VITA PLATFORM
-    #####################
-    set(TITLE_ID "PGBA00001" CACHE STRING "" FORCE)
-    list(APPEND PGBA_INC)
-    list(REMOVE_ITEM PGBA_SRC ${CMAKE_SOURCE_DIR}/external/cores/mgba/src/util/vfs/vfs-dirent.c)
-    list(APPEND PGBA_SRC ${CMAKE_SOURCE_DIR}/external/cores/mgba/src/platform/psp2/sce-vfs.c)
-    list(APPEND PGBA_CFLAGS -DPSP2 -D__HAIKU__)
-    list(APPEND PGBA_LDFLAGS)
-elseif (PLATFORM_PS4)
+if (PLATFORM_PS4)
     set(PS4_PKG_TITLE "pGBA - Portable GameBoy Advance")
     set(PS4_PKG_TITLE_ID "PGBA00001")
     set(PS4_PKG_VERSION "${VERSION_MAJOR}.${VERSION_MINOR}")
     list(APPEND GBA_CFLAGS -DHAVE_SYS_PARAM_H)
-elseif (PLATFORM_SWITCH)
-    #####################
-    # SWITCH PLATFORM
-    #####################
-    set_property(TARGET mgba PROPERTY POSITION_INDEPENDENT_CODE ON) # -fPIC
-    set_property(TARGET mgba APPEND PROPERTY INCLUDE_DIRECTORIES ${DEVKITPRO}/portlibs/switch/include) # for vfs-zip.c
-    list(APPEND PGBA_CFLAGS)
-elseif (PLATFORM_3DS)
-elseif (PLATFORM_LINUX OR PLATFORM_WINDOWS)
-    if (PLATFORM_WINDOWS)
-        list(APPEND PGBA_INC ${CMAKE_CURRENT_SOURCE_DIR}/sources/windows) # for vfs-dirent.c (mkdir)
-    endif ()
-    #####################
-    # SDL2 PLATFORM
-    #####################
-    list(APPEND PGBA_CFLAGS)
-elseif (PLATFORM_ANDROID)
-    #####################
-    # ANDROID PLATFORM
-    #####################
-    if (ANDROID_ABI STREQUAL armeabi-v7a)
-        list(APPEND PGBA_CFLAGS -marm -mcpu=cortex-a7 -mfpu=neon
-                -ffunction-sections -fomit-frame-pointer) # fix crash with release optimizations
-    endif ()
-    list(APPEND PGBA_CFLAGS -DHAVE_SYS_PARAM_H)
-endif (PLATFORM_VITA)
+endif (PLATFORM_PS4)
 
 #####################
 # pgba executable

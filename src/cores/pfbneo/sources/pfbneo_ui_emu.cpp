@@ -21,16 +21,6 @@ UINT32 (__cdecl *VidHighCol)(INT32 r, INT32 g, INT32 b, INT32 i);
 
 INT32 VidRecalcPal() { return BurnRecalcPal(); }
 
-#ifdef __PFBA_ARM__
-extern int nSekCpuCore;
-
-static bool isHardware(int hardware, int type) {
-    return (((hardware | HARDWARE_PREFIX_CARTRIDGE) ^ HARDWARE_PREFIX_CARTRIDGE)
-            & 0xff000000) == (unsigned int) type;
-}
-
-#endif
-
 static UINT32 myHighCol16(int r, int g, int b, int /* i */) {
     UINT32 t;
     t = (r << 8) & 0xf800;
@@ -46,67 +36,6 @@ PFBAUiEmu::PFBAUiEmu(UiMain *ui) : UiEmu(ui) {
     uiInstance = ui;
 }
 
-#ifdef __PFBA_ARM__
-
-int PFBAUiEmu::getSekCpuCore() {
-    int sekCpuCore = 0; // SEK_CORE_C68K: USE CYCLONE ARM ASM M68K CORE
-
-    std::vector<std::string> zipList;
-    int hardware = BurnDrvGetHardwareCode();
-
-    std::string bios = pMain->getConfig()->get(PEMUConfig::OptId::EMU_NEOBIOS, true)->getString();
-    if (isHardware(hardware, HARDWARE_PREFIX_SNK) && Utility::contains(bios, "UNIBIOS")) {
-        sekCpuCore = 1; // SEK_CORE_M68K: USE C M68K CORE
-        pMain->getUiMessageBox()->show(
-                "WARNING", "UNIBIOS DOESNT SUPPORT THE M68K ASM CORE\n"
-                           "CYCLONE ASM CORE DISABLED", "OK");
-    }
-
-    if (isHardware(hardware, HARDWARE_PREFIX_SEGA_MEGADRIVE)) {
-        sekCpuCore = 1; // SEK_CORE_M68K: USE C M68K CORE
-    } else if (isHardware(hardware, HARDWARE_PREFIX_SEGA)) {
-        if (hardware & HARDWARE_SEGA_FD1089A_ENC
-            || hardware & HARDWARE_SEGA_FD1089B_ENC
-            || hardware & HARDWARE_SEGA_MC8123_ENC
-            || hardware & HARDWARE_SEGA_FD1094_ENC
-            || hardware & HARDWARE_SEGA_FD1094_ENC_CPU2) {
-            sekCpuCore = 1; // SEK_CORE_M68K: USE C M68K CORE
-            pMain->getUiMessageBox()->show(
-                    "WARNING", "ROM IS CRYPTED, USE DECRYPTED ROM (CLONE)\n"
-                               "TO ENABLE CYCLONE ASM CORE (FASTER)", "OK");
-        }
-    } else if (isHardware(hardware, HARDWARE_PREFIX_TOAPLAN)) {
-        zipList.emplace_back("batrider");
-        zipList.emplace_back("bbakraid");
-        zipList.emplace_back("bgaregga");
-    } else if (isHardware(hardware, HARDWARE_PREFIX_SNK)) {
-        zipList.emplace_back("kof97");
-        zipList.emplace_back("kof98");
-        zipList.emplace_back("kof99");
-        zipList.emplace_back("kof2000");
-        zipList.emplace_back("kof2001");
-        zipList.emplace_back("kof2002");
-        zipList.emplace_back("kf2k3pcb");
-        //zipList.push_back("kof2003"); // WORKS
-    }
-
-    std::string zip = BurnDrvGetTextA(DRV_NAME);
-    for (unsigned int i = 0; i < zipList.size(); i++) {
-        if (zipList[i].compare(0, zip.length(), zip) == 0) {
-            pMain->getUiStatusBox()->show("THIS GAME DOES NOT SUPPORT THE M68K ASM CORE\n"
-                                       "CYCLONE ASM CORE DISABLED");
-            sekCpuCore = 1; // SEK_CORE_M68K: USE C M68K CORE
-            break;
-        }
-    }
-
-    zipList.clear();
-
-    return sekCpuCore;
-}
-
-#endif
-
 int PFBAUiEmu::load(const ss_api::Game &game) {
     currentGame = game;
 
@@ -117,11 +46,6 @@ int PFBAUiEmu::load(const ss_api::Game &game) {
         pMain->getUiMessageBox()->show("ERROR", "THIS GAME IS NOT SUPPORTED BY FBNEO...", "OK");
         return -1;
     }
-
-#ifdef __PFBA_ARM__
-    nSekCpuCore = getSekCpuCore();
-    printf("nSekCpuCore: %s\n", nSekCpuCore > 0 ? "M68K" : "C68K (ASM)");
-#endif
 
     int audio_freq = pMain->getConfig()->get(PEMUConfig::OptId::EMU_AUDIO_FREQ, true)->getInteger();
     nInterpolation = pMain->getConfig()->get(PEMUConfig::OptId::EMU_AUDIO_INTERPOLATION, true)->getInteger();
@@ -229,7 +153,6 @@ bool PFBAUiEmu::onInput(c2d::Input::Player *players) {
     // 0 > "OFF"
     // 1 > "ON"
     // 2 > "FLIP"
-    // 3 > "CAB" (vita/switch)
     int rotation = getUi()->getConfig()->get(PEMUConfig::OptId::EMU_ROTATION, true)->getArrayIndex();
     if (BurnDrvGetFlags() & BDF_ORIENTATION_VERTICAL) {
         if (rotation == 0) {
@@ -283,11 +206,7 @@ void PFBAUiEmu::onUpdate() {
     }
 
     // update fbneo video buffer and audio
-#ifdef __VITA__
-    int skip = pMain->getConfig()->get(PEMUConfig::OptId::EMU_FRAMESKIP, true)->getInteger();
-#else
     int skip = 0;
-#endif
 
     pBurnDraw = nullptr;
     frameskip++;

@@ -44,9 +44,6 @@ namespace pemu {
             EMU_SCALING_MODE,
             EMU_FILTER,
             EMU_SHADER,
-#ifdef __VITA__
-            EMU_WAIT_RENDERING,
-#endif
             EMU_FORCE_60HZ,
             EMU_AUDIO_SYNC,
             EMU_AUDIO_FREQ,

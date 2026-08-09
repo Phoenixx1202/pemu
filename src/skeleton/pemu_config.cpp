@@ -105,9 +105,6 @@ PEMUConfig::PEMUConfig(c2d::Io *io, const std::string &name, int version)
     emu_grp.addOption({"SCALING_MODE", {"AUTO", "ASPECT", "INTEGER"}, 1, OptId::EMU_SCALING_MODE});
     emu_grp.addOption({"FILTER", {std::string("POINT"), std::string("LINEAR")}, 1, OptId::EMU_FILTER});
     emu_grp.addOption({"EFFECT", {"NONE"}, 0, PEMUConfig::OptId::EMU_SHADER})->setFlags(Flags::HIDDEN);
-#ifdef __VITA__
-    emu_grp.addOption({"WAIT_RENDERING", {"OFF", "ON"}, 1, OptId::EMU_WAIT_RENDERING});
-#endif
     emu_grp.addOption({"SHOW_FPS", {"OFF", "ON"}, 0, OptId::EMU_SHOW_FPS});
     addGroup(emu_grp);
 

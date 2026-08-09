@@ -67,42 +67,12 @@ list(APPEND PGEN_SRC ../main.cpp)
 #####################
 # PLATORM SPECIFIC
 #####################
-if (PLATFORM_VITA)
-    #####################
-    # PS VITA PLATORM
-    #####################
-    set(TITLE_ID "PGEN00001" CACHE STRING "" FORCE)
-    list(APPEND PGEN_INC)
-    list(APPEND PGEN_SRC)
-    list(APPEND PGEN_CFLAGS)
-    list(APPEND PGEN_LDFLAGS)
-elseif (PLATFORM_PS4)
+if (PLATFORM_PS4)
     set(PS4_PKG_TITLE "pGEN - Portable Genesis Plus GX")
     set(PS4_PKG_TITLE_ID "PGEN00001")
     set(PS4_PKG_VERSION "${VERSION_MAJOR}.${VERSION_MINOR}")
     list(APPEND GENESIS_CFLAGS -DHAVE_SYS_PARAM_H)
-elseif (PLATFORM_SWITCH)
-    #####################
-    # SWITCH PLATORM
-    #####################
-    list(APPEND PGEN_SRC)
-    list(APPEND PGEN_CFLAGS)
-elseif (PLATFORM_3DS)
-elseif (PLATFORM_LINUX OR PLATFORM_WINDOWS)
-    #####################
-    # SDL2 PLATORM
-    #####################
-    list(APPEND PGEN_CFLAGS)
-elseif (PLATFORM_ANDROID)
-    #####################
-    # ANDROID PLATORM
-    #####################
-    if (ANDROID_ABI STREQUAL armeabi-v7a)
-        list(APPEND PGEN_CFLAGS -marm -mcpu=cortex-a7 -mfpu=neon
-                -ffunction-sections -fomit-frame-pointer) # fix crash with release optimizations
-    endif ()
-    list(APPEND GENESIS_CFLAGS -DHAVE_SYS_PARAM_H)
-endif (PLATFORM_VITA)
+endif (PLATFORM_PS4)
 
 #####################
 # pgen executable

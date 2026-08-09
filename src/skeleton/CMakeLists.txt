@@ -25,23 +25,15 @@ if (OPTION_FULLSCREEN)
 endif ()
 
 if (OPTION_MPV_PLAYER)
-    if (PLATFORM_WINDOWS)
-        list(APPEND LDFLAGS mpv.dll.a)
-    else ()
-        pkg_search_module(MPV REQUIRED mpv)
-        list(APPEND CROSS2DUI_INCLUDE ${MPV_INCLUDE_DIRS})
-        list(APPEND LDFLAGS ${MPV_LIBRARIES})
-    endif ()
-    # TODO: fix mpv.pc ?
-    if (PLATFORM_SWITCH)
-        list(APPEND LDFLAGS drm_nouveau)
-    endif ()
+    pkg_search_module(MPV REQUIRED mpv)
+    list(APPEND CROSS2DUI_INCLUDE ${MPV_INCLUDE_DIRS})
+    list(APPEND LDFLAGS ${MPV_LIBRARIES})
     list(APPEND FLAGS -D__MPV__)
 endif ()
 
 # minizip
 pkg_search_module(MINIZIP minizip)
-if (MINIZIP_FOUND AND NOT PLATFORM_VITA) # vita minizip not built with "zip.h" support
+if (MINIZIP_FOUND)
     list(APPEND CROSS2DUI_INCLUDE ${MINIZIP_INCLUDE_DIRS})
     list(APPEND LDFLAGS ${MINIZIP_LIBRARIES})
 else ()
@@ -52,15 +44,6 @@ else ()
             ${CMAKE_CURRENT_SOURCE_DIR}/external/minizip/zip.c
             ${CMAKE_CURRENT_SOURCE_DIR}/external/minizip/unzip.c)
     list(APPEND FLAGS -DIOAPI_NO_64 -DUSE_FILE32API)
-endif ()
-
-if (PLATFORM_LINUX OR PLATFORM_WINDOWS)
-    set(CMAKE_THREAD_PREFER_PTHREAD TRUE)
-    find_package(Threads REQUIRED)
-    if (NOT PLATFORM_WINDOWS)
-        list(APPEND LDFLAGS ${CMAKE_THREAD_LIBS_INIT} lzma dl)
-    endif ()
-elseif (PLATFORM_3DS)
 endif ()
 
 ##########################

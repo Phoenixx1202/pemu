@@ -14,12 +14,6 @@
 #include <sys/stat.h>
 #include <cheats.h>
 
-#ifdef __PSP2__
-#include <psp2/io/dirent.h>
-#include <psp2/kernel/threadmgr.h>
-#define usleep sceKernelDelayThread
-#endif
-
 using namespace c2d;
 using namespace c2d::config;
 using namespace pemu;

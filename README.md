@@ -1,25 +1,15 @@
-[![linux-release](https://github.com/Cpasjuste/pemu/actions/workflows/linux-release.yml/badge.svg)](https://github.com/Cpasjuste/pemu/actions/workflows/linux-release.yml)
-[![linux-dev](https://github.com/Cpasjuste/pemu/actions/workflows/linux-dev.yml/badge.svg)](https://github.com/Cpasjuste/pemu/actions/workflows/linux-dev.yml)  
-[![windows-release](https://github.com/Cpasjuste/pemu/actions/workflows/windows-release.yml/badge.svg)](https://github.com/Cpasjuste/pemu/actions/workflows/windows-release.yml)
-[![windows-dev](https://github.com/Cpasjuste/pemu/actions/workflows/windows-dev.yml/badge.svg)](https://github.com/Cpasjuste/pemu/actions/workflows/windows-dev.yml)  
-[![switch-release](https://github.com/Cpasjuste/pemu/actions/workflows/switch-release.yml/badge.svg)](https://github.com/Cpasjuste/pemu/actions/workflows/switch-release.yml)
-[![switch-dev](https://github.com/Cpasjuste/pemu/actions/workflows/switch-dev.yml/badge.svg)](https://github.com/Cpasjuste/pemu/actions/workflows/switch-dev.yml)  
-[![3ds-release](https://github.com/Cpasjuste/pemu/actions/workflows/3ds-release.yml/badge.svg)](https://github.com/Cpasjuste/pemu/actions/workflows/3ds-release.yml)
-[![3ds-dev](https://github.com/Cpasjuste/pemu/actions/workflows/3ds-dev.yml/badge.svg)](https://github.com/Cpasjuste/pemu/actions/workflows/3ds-dev.yml)  
 [![ps4-release](https://github.com/Cpasjuste/pemu/actions/workflows/ps4-release.yml/badge.svg)](https://github.com/Cpasjuste/pemu/actions/workflows/ps4-release.yml)
 [![ps4-dev](https://github.com/Cpasjuste/pemu/actions/workflows/ps4-dev.yml/badge.svg)](https://github.com/Cpasjuste/pemu/actions/workflows/ps4-dev.yml)  
-[![vita-release](https://github.com/Cpasjuste/pemu/actions/workflows/vita-release.yml/badge.svg)](https://github.com/Cpasjuste/pemu/actions/workflows/vita-release.yml)
-[![vita-dev](https://github.com/Cpasjuste/pemu/actions/workflows/vita-dev.yml/badge.svg)](https://github.com/Cpasjuste/pemu/actions/workflows/vita-dev.yml)
+[![ps5-release](https://github.com/Cpasjuste/pemu/actions/workflows/ps5-release.yml/badge.svg)](https://github.com/Cpasjuste/pemu/actions/workflows/ps5-release.yml)  
+[![ps5-dev](https://github.com/Cpasjuste/pemu/actions/workflows/ps5-dev.yml/badge.svg)](https://github.com/Cpasjuste/pemu/actions/workflows/ps5-dev.yml)
 
-## pEMU: Portable Emulator
+## pEMU: Portable Emulator (PS4/PS5)
 
 **<ins>Building</ins>**
 
-- [Linux](https://github.com/Cpasjuste/pemu/blob/master/.github/workflows/linux-release.yml)
-- [Windows](https://github.com/Cpasjuste/pemu/blob/master/.github/workflows/windows-release.yml)
-- [Nintendo Switch](https://github.com/Cpasjuste/pemu/blob/master/.github/workflows/switch-release.yml)
 - [Sony PS4](https://github.com/Cpasjuste/pemu/blob/master/.github/workflows/ps4-release.yml)
-- [Sony PS VITA](https://github.com/Cpasjuste/pemu/blob/master/.github/workflows/vita-release.yml)
+- [Sony PS5](https://github.com/Cpasjuste/pemu/blob/master/.github/workflows/ps5-release.yml)
+- [Sony PS5 (dev)](https://github.com/Cpasjuste/pemu/blob/master/.github/workflows/ps5-dev.yml)
 
 **<ins>Gamelists</ins>**
 

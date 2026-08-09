@@ -19,12 +19,6 @@ set(OPTION_UPDATE_CONFIG OFF CACHE BOOL "Force config file updating")
 # BUILD OPTIONS
 ####################
 
-# linux/windows screen handling options
-if (PLATFORM_LINUX OR PLATFORM_WINDOWS)
-    set(OPTION_RESOLUTION ON CACHE BOOL "Add screen resolution option")
-    set(OPTION_FULLSCREEN ON CACHE BOOL "Add switch to fullscreen option")
-endif ()
-
 # add sscrap (screenscrapper scrapper!) library
 add_subdirectory(external/sscrap)
 
@@ -42,9 +36,4 @@ add_subdirectory(src/cores/pfbneo)
 add_subdirectory(src/cores/pgen)
 add_subdirectory(src/cores/pnes)
 add_subdirectory(src/cores/psnes)
-# TODO: bump mpga core for windows
-if (PLATFORM_LINUX OR PLATFORM_SWITCH OR PLATFORM_PS4 OR PLATFORM_PS5 OR PLATFORM_VITA)
-    add_subdirectory(src/cores/pgba)
-else ()
-    message(WARNING "skipping pgba build, not supported on this platform yet...")
-endif ()
+add_subdirectory(src/cores/pgba)

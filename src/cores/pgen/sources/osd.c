@@ -51,13 +51,8 @@ void set_config_defaults() {
     config.fm_preamp = 100;
     config.cdda_volume = 100;
     config.pcm_volume = 100;
-#ifdef __VITA__
-    config.hq_fm = 0;
-    config.hq_psg = 0;
-#else
     config.hq_fm = 1;
     config.hq_psg = 1;
-#endif
     config.filter = 1;
     config.low_freq = 200;
     config.high_freq = 8000;

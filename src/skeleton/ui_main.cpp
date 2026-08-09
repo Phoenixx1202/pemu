@@ -6,12 +6,7 @@
 #include "pemu.h"
 #include "ui_main.h"
 
-#ifdef __SWITCH__
-UiMain::UiMain(c2d::Io *io, const c2d::Vector2f &size) : C2DRenderer({1280, 720}) {
-#else
-
 UiMain::UiMain(c2d::Io *io, const c2d::Vector2f &size) : C2DRenderer(size) {
-#endif
     printf("UiMain(%ix%i)\n", (int) UiMain::getSize().x, (int) UiMain::getSize().y);
     UiMain::setIo(io);
 }

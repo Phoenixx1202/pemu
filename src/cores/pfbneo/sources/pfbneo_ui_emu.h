@@ -19,10 +19,6 @@ public:
 
 private:
 
-#ifdef __PFBA_ARM__
-    int getSekCpuCore();
-#endif
-
     bool onInput(c2d::Input::Player *players) override;
 
     void onUpdate() override;

@@ -85,8 +85,6 @@ void PFBNRomList::build(const ss_api::GameList::GameAddedCb &cb) {
     printf("PFBNRomList::build: updating config again...\n");
     ui->getConfig()->load();
 
-#ifndef __VITA__ // TODO: verify why this make release build crashing in vita
     float time_spent = ui->getElapsedTime().asSeconds() - time_start;
     printf("PFBNRomList::build(): list built in %f\n", time_spent);
-#endif
 }

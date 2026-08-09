@@ -15,26 +15,10 @@ namespace c2d {
             C2DIo::create(PSNESIo::getDataPath() + "saves");
         }
 
-#ifdef __PSP2__
-        std::string getDataPath() override {
-            return "ux0:/data/psnes/";
-        }
-#elif __PS4__
+#ifdef __PS4__
         std::string getDataPath() override {
             return "/data/psnes/";
         }
-#elif __3DS__
-#ifndef NDEBUG
-        std::string getDataPath() override {
-            return "/3ds/psnes/";
-        }
-#endif
-#elif __SWITCH__
-#if __DEBUG_SVC__
-        std::string getDataPath() override {
-            return "/switch/psnes/";
-        }
-#endif
 #endif
     };
 }

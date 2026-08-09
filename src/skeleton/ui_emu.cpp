@@ -86,13 +86,6 @@ void UiEmu::resume() {
     // disable auto repeat delay
     pMain->getInput()->setRepeatDelay(0);
 
-#ifdef __VITA__
-    config::Option *option = pMain->getConfig()->get(PEMUConfig::OptId::EMU_WAIT_RENDERING, true);
-    if (option) {
-        ((PSP2Renderer *) pMain)->setWaitRendering(option->getInteger());
-    }
-#endif
-
     if (audio) {
         audio->pause(0);
     }
@@ -114,10 +107,6 @@ void UiEmu::stop() {
         delete (video);
         video = nullptr;
     }
-
-#ifdef __VITA__
-    ((PSP2Renderer *) pMain)->setWaitRendering(true);
-#endif
 
     pMain->updateInputMapping(false);
     setVisibility(Visibility::Hidden);

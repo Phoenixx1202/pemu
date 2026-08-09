@@ -57,11 +57,7 @@ namespace pemu {
         bool mShowSystemText = false;
 
         c2d::C2DClock mTimerLoadInfo;
-#ifdef __3DS__
-        int mTimerLoadInfoDelay = 1000;
-#else
         int mTimerLoadInfoDelay = 300;
-#endif
         int mTimerLoadInfoDone = 0;
         c2d::C2DClock mTimerLoadVideo;
         int mTimerLoadVideoDelay = 5000;

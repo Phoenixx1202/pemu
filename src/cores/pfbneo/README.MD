@@ -1,5 +1,5 @@
-pFBN: Portable FinalBurn Neo
-===============================
+pFBN: Portable FinalBurn Neo (PS4/PS5)
+=======================================
 
 ![](https://github.com/Cpasjuste/pemu/raw/master/src/cores/pfbneo/data/screenshot.png)
 
@@ -11,17 +11,13 @@ pFBN: Portable FinalBurn Neo
 - use a recent rendering interface for speed and effect support
 - cross-platform and code portability
 - easy updates of fbneo core (no modifications to the original sources)
-- use arm asm m68k ([cyclone](https://github.com/notaz/cyclone68000)) core on arm devices
 
 -----
 
 #### Supported devices
 
-- Linux
-- Windows
-- Sony Ps Vita
 - Sony PS4
-- Nintendo Switch
+- Sony PS5
 
 -----
 
@@ -52,70 +48,6 @@ pFBN: Portable FinalBurn Neo
 The "Arcade" system id "0x12341234" is a special case, arcade roms found in this path will get their system/id from fbneo internal drivers database.
 -----
 
-### NINTENDO SWITCH INFORMATION
-
-* ##### NINTENDO SWITCH CONTROLS (UI)
-|                                                                                                   Buttons                                                                                                   | Action                                 |
-|:-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------:|----------------------------------------|
-|                                                     <img align="center" src="../../../data/switch/romfs/skins/default/buttons/6.png" width="32" height="32"/>                                                      | General options + default roms options |
-|                                                     <img align="center" src="../../../data/switch/romfs/skins/default/buttons/4.png" width="32" height="32"/>                                                      | Per rom options                        |
-| <img align="center" src="../../../data/switch/romfs/skins/default/buttons/104.png" width="32" height="32"/> / <img align="center" src="../../../data/switch/romfs/skins/default/buttons/105.png" width="32" height="32"/> | Switch systems                         |
-
-* ##### NINTENDO SWITCH CONTROLS (UI, SINGLE JOYCON MODE, 1P ONLY)
-|                                                                                                   Buttons                                                                                                   | Action                                 |
-|:-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------:|----------------------------------------|
-|   <img align="center" src="../../../data/switch/romfs/skins/default/buttons/7.png" width="32" height="32"/> / <img align="center" src="../../../data/switch/romfs/skins/default/buttons/8.png" width="32" height="32"/>   | General options + default roms options |
-|   <img align="center" src="../../../data/switch/romfs/skins/default/buttons/6.png" width="32" height="32"/> / <img align="center" src="../../../data/switch/romfs/skins/default/buttons/4.png" width="32" height="32"/>   | Per rom options                        |
-| <img align="center" src="../../../data/switch/romfs/skins/default/buttons/104.png" width="32" height="32"/> / <img align="center" src="../../../data/switch/romfs/skins/default/buttons/105.png" width="32" height="32"/> | Switch systems (SL/SR)                 |
-
-* ##### NINTENDO SWITCH CONTROLS (IN-GAME)
-|                                                                                                                                                                                                      Buttons                                                                                                                                                                                                      | Action                               |
-|:-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------:|--------------------------------------|
-|                                                                                                                                                        <img align="center" src="../../../data/switch/romfs/skins/default/buttons/4.png" width="32" height="32"/>                                                                                                                                                         | Coins                                |
-|                                                                                                                                                        <img align="center" src="../../../data/switch/romfs/skins/default/buttons/6.png" width="32" height="32"/>                                                                                                                                                         | Start                                |
-|                                                                                                      <img align="center" src="../../../data/switch/romfs/skins/default/buttons/6.png" width="32" height="32"/> + <img align="center" src="../../../data/switch/romfs/skins/default/buttons/4.png" width="32" height="32"/>                                                                                                      | pFBN menu                            |
-| <img align="center" src="../../../data/switch/romfs/skins/default/buttons/6.png" width="32" height="32"/> + <img align="center" src="../../../data/switch/romfs/skins/default/buttons/2.png" width="32" height="32"/> + <img align="center" src="../../../data/switch/romfs/skins/default/buttons/0.png" width="32" height="32"/> + <img align="center" src="../../../data/switch/romfs/skins/default/buttons/1.png" width="32" height="32"/> | UniBios menu (Neo-Geo)               |
-|                                                                                                                                                        <img align="center" src="../../../data/switch/romfs/skins/default/buttons/6.png" width="32" height="32"/>                                                                                                                                                         | Hold 2 seconds for diagnostic menu   |
-|                                                                                                                                                        <img align="center" src="../../../data/switch/romfs/skins/default/buttons/4.png" width="32" height="32"/>                                                                                                                                                         | Hold 2 seconds to reset current game |
-
-* ##### NINTENDO SWITCH CONTROLS (IN-GAME, SINGLE JOYCON MODE, LEFT)
-|                                                                                                                                                                                                       Buttons                                                                                                                                                                                                        | Action                                         |
-|:--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------:|------------------------------------------------|
-|                                                                                                                                                          <img align="center" src="../../../data/switch/romfs/skins/default/buttons/4.png" width="32" height="32"/>                                                                                                                                                          | Coins                                          |
-|                                                                                                                                                          <img align="center" src="../../../data/switch/romfs/skins/default/buttons/7.png" width="32" height="32"/>                                                                                                                                                          | Start                                          |
-|                                                                                                       <img align="center" src="../../../data/switch/romfs/skins/default/buttons/7.png" width="32" height="32"/> + <img align="center" src="../../../data/switch/romfs/skins/default/buttons/4.png" width="32" height="32"/>                                                                                                        | pFBN menu (1P only)                            |
-| <img align="center" src="../../../data/switch/romfs/skins/default/buttons/7.png" width="32" height="32"/> + <img align="center" src="../../../data/switch/romfs/skins/default/buttons/13.png" width="32" height="32"/> + <img align="center" src="../../../data/switch/romfs/skins/default/buttons/12.png" width="32" height="32"/> + <img align="center" src="../../../data/switch/romfs/skins/default/buttons/14.png" width="32" height="32"/> | UniBios menu (Neo-Geo) (1P only)               |
-|                                                                                                                                                          <img align="center" src="../../../data/switch/romfs/skins/default/buttons/7.png" width="32" height="32"/>                                                                                                                                                          | Hold 2 seconds for diagnostic menu (1P only)   |
-|                                                                                                                                                          <img align="center" src="../../../data/switch/romfs/skins/default/buttons/4.png" width="32" height="32"/>                                                                                                                                                          | Hold 2 seconds to reset current game (1P only) |
-
-* ##### NINTENDO SWITCH CONTROLS (IN-GAME, SINGLE JOYCON MODE, RIGHT)
-|                                                                                                                                                                                                      Buttons                                                                                                                                                                                                      | Action                                         |
-|:-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------:|------------------------------------------------|
-|                                                                                                                                                        <img align="center" src="../../../data/switch/romfs/skins/default/buttons/6.png" width="32" height="32"/>                                                                                                                                                         | Coins                                          |
-|                                                                                                                                                        <img align="center" src="../../../data/switch/romfs/skins/default/buttons/8.png" width="32" height="32"/>                                                                                                                                                         | Start                                          |
-|                                                                                                      <img align="center" src="../../../data/switch/romfs/skins/default/buttons/8.png" width="32" height="32"/> + <img align="center" src="../../../data/switch/romfs/skins/default/buttons/6.png" width="32" height="32"/>                                                                                                      | pFBN menu (1P only)                            |
-| <img align="center" src="../../../data/switch/romfs/skins/default/buttons/8.png" width="32" height="32"/> + <img align="center" src="../../../data/switch/romfs/skins/default/buttons/0.png" width="32" height="32"/> + <img align="center" src="../../../data/switch/romfs/skins/default/buttons/1.png" width="32" height="32"/> + <img align="center" src="../../../data/switch/romfs/skins/default/buttons/3.png" width="32" height="32"/> | UniBios menu (Neo-Geo) (1P only)               |
-|                                                                                                                                                        <img align="center" src="../../../data/switch/romfs/skins/default/buttons/8.png" width="32" height="32"/>                                                                                                                                                         | Hold 2 seconds for diagnostic menu (1P only)   |
-|                                                                                                                                                        <img align="center" src="../../../data/switch/romfs/skins/default/buttons/6.png" width="32" height="32"/>                                                                                                                                                         | Hold 2 seconds to reset current game (1P only) |
------
-
-### PS VITA INFORMATION'S ((may be outdated))
-
-- data is located at "ux0:/data/pfba"
-- default rom path is "ux0:/data/pfba/roms/"
-- rom path can be changed in "ux0:/data/pfba/pfba.cfg"
-- preview images can be put in "ux0:/data/pfba/previews/rom-name.png"
-- ui: START = general options + default roms configuration
-- ui: SELECT = per rom configuration
-- in game: SELECT+START = menu
-- in game: SELECT+L = saves states
-- in game: SELECT+SQUARE = service switch
-- in game: SELECT+TRIANGLE = 1P+2P switch
-- in game: SELECT+LEFT/RIGHT = change shader
-- in game: SELECT+UP/DOWN = change scaling
-
-----
-
 ### COMPILATION
 
 - see pemu [README.MD](https://github.com/Cpasjuste/pemu)
@@ -123,11 +55,8 @@ The "Arcade" system id "0x12341234" is a special case, arcade roms found in this
 -----
 
 ### Thanks
-- Xavier for the support (http://www.consolex-bordeaux.fr/)
+- Xavier for the support (http://www.consoles-bordeaux.fr/)
 - ScHlAuChi for all the advices, testing, and hardware support
 - fba/mame authors (http://www.fbalpha.com/, http://mamedev.org/)
-- xerpi for vita2d (https://github.com/xerpi/libvita2d)
-- frangarcj for vita2d shader support (https://github.com/frangarcj/vita2dlib)
-- people behind the vitasdk (https://github.com/vitasdk)
 - WinterMute and fincs, for their continue work on the Nintendo Switch
 - [screencraper.fr](https://www.screenscraper.fr/)

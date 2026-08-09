@@ -44,17 +44,10 @@ void poll_cb();
 #define RETRO_DEVICE_ANALOG       5
 #define RETRO_DEVICE_POINTER      6
 
-#ifdef __SWITCH__
-#define RETRO_DEVICE_ID_JOYPAD_B        c2d::Input::Button::B
-#define RETRO_DEVICE_ID_JOYPAD_A        c2d::Input::Button::A
-#define RETRO_DEVICE_ID_JOYPAD_Y        c2d::Input::Button::Y
-#define RETRO_DEVICE_ID_JOYPAD_X        c2d::Input::Button::X
-#else
 #define RETRO_DEVICE_ID_JOYPAD_B        c2d::Input::Button::A
 #define RETRO_DEVICE_ID_JOYPAD_A        c2d::Input::Button::B
 #define RETRO_DEVICE_ID_JOYPAD_Y        c2d::Input::Button::X
 #define RETRO_DEVICE_ID_JOYPAD_X        c2d::Input::Button::Y
-#endif
 #define RETRO_DEVICE_ID_JOYPAD_SELECT   c2d::Input::Button::Select
 #define RETRO_DEVICE_ID_JOYPAD_START    c2d::Input::Button::Start
 #define RETRO_DEVICE_ID_JOYPAD_UP       c2d::Input::Button::Up

@@ -14,12 +14,6 @@ PNESConfig::PNESConfig(c2d::Io *io, int version) : PEMUConfig(io, "PNES", versio
     // no need for auto-scaling mode on pnes
     getOption(PEMUConfig::OptId::EMU_SCALING_MODE)->setArray({"ASPECT", "INTEGER"}, 0);
 
-#ifdef __SWITCH__
-    // on nintendo switch invert A/B buttons
-    getOption(PEMUConfig::OptId::JOY_A)->setInteger(KEY_JOY_B_DEFAULT);
-    getOption(PEMUConfig::OptId::JOY_B)->setInteger(KEY_JOY_A_DEFAULT);
-#endif
-
     // "romlist.cpp" (RomList::build) will also reload config, but we need new roms paths
     PEMUConfig::load();
 

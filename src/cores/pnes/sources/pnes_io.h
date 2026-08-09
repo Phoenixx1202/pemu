@@ -16,29 +16,13 @@ namespace c2d {
             C2DIo::create(PNESIo::getDataPath() + "saves");
         }
 
-#ifdef __PSP2__
-        std::string getDataPath() override {
-            return "ux0:/data/pnes/";
-        }
-#elif __PS4__
+#ifdef __PS4__
         std::string getDataPath() override {
             return "/data/pnes/";
         }
 #ifndef NDEBUG
         std::string getRomFsPath() override {
             return "/data/pnes/";
-        }
-#endif
-#elif __3DS__
-#ifndef NDEBUG
-        std::string getDataPath() override {
-            return "/3ds/pnes/";
-        }
-#endif
-#elif __SWITCH__
-#if __DEBUG_SVC__
-        std::string getDataPath() override {
-            return "/switch/pnes/";
         }
 #endif
 #endif

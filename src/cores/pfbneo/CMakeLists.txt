@@ -3,7 +3,7 @@ cmake_minimum_required(VERSION 3.10)
 
 project(pfbneo)
 
-# pfbneo became very heavy in size, we disable consoles for ps vita
+# pfbneo became very heavy in size, we disable consoles
 option(OPTION_LIGHT "Disable consoles and some arcade drivers" OFF)
 
 # handle m68k
@@ -280,80 +280,15 @@ endif ()
 set(CMAKE_CXX_STANDARD 17)
 
 #################
-# PSP2 (ps vita)
+# PALYSTATION (PS4/PS5)
 #################
-if (PLATFORM_VITA)
-    enable_language(ASM)
-    set(TITLE_ID "PFBN00001" CACHE STRING "" FORCE)
-    list(APPEND INC sources/cpu/cyclone)
-    list(REMOVE_ITEM SRC_CPU ${CMAKE_SOURCE_DIR}/external/cores/FBNeo/src/cpu/m68000_intf.cpp)
-    list(APPEND SRC_PFBA sources/cpu/c68000_intf.cpp sources/cpu/cyclone/Cyclone.s)
-    list(APPEND FLAGS -DBUILD_C68K -DUSE_FILE32API -DUSE_SPEEDHACKS -D__PFBA_ARM__)
-    list(APPEND LDFLAGS ScePower_stub pthread)
-elseif (PLATFORM_PS4)
+if (PLATFORM_PS4)
     set(PS4_PKG_TITLE "pFBN - Portable Final Burn Neo")
     set(PS4_PKG_TITLE_ID "PFBN00001")
     set(PS4_PKG_VERSION "${VERSION_MAJOR}.${VERSION_MINOR}")
     list(APPEND FLAGS -D__fastcall=)
     list(APPEND LDFLAGS)
-elseif (PLATFORM_PS3)
-    ##############
-    # PS3
-    ##############
-    list(APPEND FLAGS
-            -D__PS3__
-            -DNO_KEYBOARD -D__CELLOS_LV2__ -DUSE_FILE32API
-            -mhard-float -ffunction-sections -fdata-sections)
-    list(APPEND LDFLAGS
-            ${PSL1GHT}/ppu/lib/libpngdec.a
-            ${PSL1GHT}/portlibs/ppu/lib/libfreetype.a
-            ${PSL1GHT}/portlibs/ppu/lib/libpng.a
-            ${PSL1GHT}/portlibs/ppu/lib/libtiff.a
-            ${PSL1GHT}/portlibs/ppu/lib/libjpeg.a
-            ${PSL1GHT}/ppu/lib/libgcm_sys.a
-            ${PSL1GHT}/ppu/lib/librsx.a
-            ${PSL1GHT}/ppu/lib/libsysutil.a
-            ${PSL1GHT}/ppu/lib/libsysmodule.a
-            ${PSL1GHT}/ppu/lib/libio.a
-            ${PSL1GHT}/ppu/lib/libaudio.a
-            ${PSL1GHT}/portlibs/ppu/lib/libz.a)
-elseif (PLATFORM_3DS)
-    ##############
-    # 3DS
-    ##############
-    enable_language(ASM)
-    list(REMOVE_ITEM SRC_CPU ${CMAKE_SOURCE_DIR}/external/cores/FBNeo/src/cpu/m68000_intf.cpp)
-    list(APPEND SRC_PFBA sources/cpu/c68000_intf.cpp sources/cpu/cyclone/Cyclone.s)
-    list(APPEND INC
-            sources/3ds
-            sources/cpu/cyclone
-            ${DEVKITPRO}/libctru/include
-            ${DEVKITPRO}/portlibs/armv6k/include)
-    list(APPEND FLAGS -DLSB_FIRST -DUSE_SPEEDHACKS -D__PFBA_ARM__
-            -ffunction-sections -fomit-frame-pointer)
-elseif (PLATFORM_SWITCH)
-    ##############
-    # NX (SWITCH)
-    ##############
-    list(APPEND FLAGS -DUSE_FILE32API -ffunction-sections -fomit-frame-pointer)
-elseif (PLATFORM_LINUX)
-    ##############
-    # LINUX
-    ##############
-    list(APPEND FLAGS -D__fastcall=)
-elseif (PLATFORM_WINDOWS)
-    ##############
-    # WINDOWS
-    ##############
-    list(APPEND FLAGS)
-elseif (PLATFORM_ANDROID)
-    if (ANDROID_ABI STREQUAL armeabi-v7a)
-        list(APPEND FLAGS -DUSE_SPEEDHACKS
-                -ffunction-sections -fomit-frame-pointer
-                -ffast-math -frounding-math -marm -mcpu=cortex-a7 -mfpu=neon)
-    endif ()
-    list(APPEND FLAGS -O3)
-endif (PLATFORM_VITA)
+endif (PLATFORM_PS4)
 
 # source files
 set(SRC ${SRC_PFBA} ${SRC_CPU} ${SRC_DRV} ${SRC_BURN} ${SRC_BURNER} ${SRC_INTF} ${SRC_7Z})
@@ -407,8 +342,5 @@ add_custom_target(${PROJECT_NAME}.deps
         # driverlist.h
         COMMAND ${PERL_EXECUTABLE} ${CMAKE_SOURCE_DIR}/external/cores/FBNeo/src/dep/scripts/gamelist.pl -o ${CMAKE_CURRENT_BINARY_DIR}/deps/driverlist.h -l ${CMAKE_CURRENT_BINARY_DIR}/deps/gamelist.txt ${SRC_DRV}
 )
-if (PLATFORM_ANDROID)
-    add_dependencies(${PROJECT_NAME} ${PROJECT_NAME}.deps)
-endif ()
 
 message("-- C2D: Be sure to build \"${PROJECT_NAME}.deps\" target before \"${PROJECT_NAME}\" target")

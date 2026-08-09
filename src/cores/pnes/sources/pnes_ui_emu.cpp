@@ -105,16 +105,6 @@ void PNESUiEmu::onUpdate() {
                                         Nes::Core::Input::Controllers::Pad::LEFT : 0;
             cNstPads->pad[i].buttons |= (players[i].buttons & c2d::Input::Button::Right) > 0 ?
                                         Nes::Core::Input::Controllers::Pad::RIGHT : 0;
-#ifdef __3DS__
-            cNstPads->pad[i].buttons |= (players[i].buttons & c2d::Input::Button::A) > 0 ?
-                                        Nes::Core::Input::Controllers::Pad::A : 0;
-            cNstPads->pad[i].buttons |= (players[i].buttons & c2d::Input::Button::B) > 0 ?
-                                        Nes::Core::Input::Controllers::Pad::B : 0;
-            cNstPads->pad[i].buttons |= (players[i].buttons & c2d::Input::Button::X) > 0 ?
-                                        Nes::Core::Input::Controllers::Pad::A : 0;
-            cNstPads->pad[i].buttons |= (players[i].buttons & c2d::Input::Button::Y) > 0 ?
-                                        Nes::Core::Input::Controllers::Pad::B : 0;
-#else
             cNstPads->pad[i].buttons |= (players[i].buttons & c2d::Input::Button::A) > 0 ?
                                         Nes::Core::Input::Controllers::Pad::B : 0;
             cNstPads->pad[i].buttons |= (players[i].buttons & c2d::Input::Button::B) > 0 ?
@@ -123,7 +113,6 @@ void PNESUiEmu::onUpdate() {
                                         Nes::Core::Input::Controllers::Pad::B : 0;
             cNstPads->pad[i].buttons |= (players[i].buttons & c2d::Input::Button::Y) > 0 ?
                                         Nes::Core::Input::Controllers::Pad::A : 0;
-#endif
         }
 
         // step nestopia core

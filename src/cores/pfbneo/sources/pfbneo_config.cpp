@@ -31,13 +31,8 @@ PFBAConfig::PFBAConfig(c2d::Io *io, int version) : PEMUConfig(io, "PFBNEO", vers
                       2, PEMUConfig::OptId::EMU_AUDIO_INTERPOLATION, C2D_CONFIG_RESTART_EMU_NEEDED});
     group->addOption({"AUDIO_FM_INTERPOLATION", {"0", "1", "3"},
                       2, PEMUConfig::OptId::EMU_AUDIO_FMINTERPOLATION, C2D_CONFIG_RESTART_EMU_NEEDED});
-#ifdef __VITA__
-    group->addOption({"ROTATION", {"OFF", "ON", "FLIP", "CAB MODE"},
+group->addOption({"ROTATION", {"OFF", "ON", "FLIP"},
                       1, PEMUConfig::OptId::EMU_ROTATION, C2D_CONFIG_RESTART_EMU_NEEDED});
-#else
-    group->addOption({"ROTATION", {"OFF", "ON", "FLIP"},
-                      1, PEMUConfig::OptId::EMU_ROTATION, C2D_CONFIG_RESTART_EMU_NEEDED});
-#endif
     group->addOption(
             {"NEOBIOS", {"UNIBIOS_4_0", "UNIBIOS_3_3", "UNIBIOS_3_2", "UNIBIOS_3_1",
                          "MVS_ASIA_EUR_V6S1", "MVS_ASIA_EUR_V5S1", "MVS_ASIA_EUR_V3S4",
@@ -45,14 +40,8 @@ PFBAConfig::PFBAConfig(c2d::Io *io, int version) : PEMUConfig(io, "PFBNEO", vers
                          "MVS_JPN_V5", "MVS_JPN_V3S4", "MVS_JPN_J3", "AES_ASIA",
                          "AES_JAPAN", "NEO_MVH_MV1CA", "NEO_MVH_MV1CJ", "DECK_V6", "DEVKIT"},
              0, PEMUConfig::OptId::EMU_NEOBIOS, C2D_CONFIG_RESTART_EMU_NEEDED});
-#ifdef __PFBA_ARM__
-    // do not use unibios as default on vita for cyclone asm compatibility
-    group->getOption(PEMUConfig::OptId::EMU_NEOBIOS)->setArrayIndex(4);
-    group->addOption({"FRAMESKIP", {"0", "1", "2", "3", "4", "5", "6", "7", "8", "9"},
-                      0, PEMUConfig::OptId::EMU_FRAMESKIP, C2D_CONFIG_RESTART_EMU_NEEDED});
-#endif
 
-#if defined(__PS4__) || defined(ANDROID)
+#if defined(__PS4__)
     // force 48000hz audio output
     get(PEMUConfig::OptId::EMU_AUDIO_FREQ)->setArrayIndex(4);
     get(PEMUConfig::OptId::EMU_AUDIO_FREQ)->setFlags(PEMUConfig::Flags::HIDDEN);

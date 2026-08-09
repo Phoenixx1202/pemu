@@ -3,20 +3,17 @@ pNES: Portable NES
 
 ![](https://github.com/Cpasjuste/pemu/raw/master/src/cores/pnes/data/screenshot.png)
 
-
 ### The main goals of this [nestopia](https://github.com/0ldsk00l/nestopia) port are:
 
-- have a basic but user friendly user interface on non windows devices
+- have a basic but user friendly user interface
 - use a recent rendering interface for speed and effects support
 - cross-platform and code portability
 - easy updates of nestopia core (no modifications to the original sources)
 
 ### Currently supported devices
 
-- Linux (sdl1, sdl2)
-- Nintendo Switch (libnx, sdl2)
 - Sony PS4 (openorbis)
-- Sony Ps Vita (vitasdk, vita2d)
+- Sony PS5
 
 ### Capabilities
 - Support save states
@@ -24,16 +21,14 @@ pNES: Portable NES
 - Support hardware filtering (shaders)
 - Support shaders effects
 
-### Installation (switch)
-- copy "pnes" directory to "/switch/" directory on sdcard
-- copy roms to "/switch/pnes/roms/" directory on sdcard
+### Installation (ps4/ps5)
+- install pkg
+- copy roms to "/data/pnes/roms/" directory on hdd
 
-### Usage (switch)
-- Press (+) in the rom list to configure main options and default roms options
-- Press (-) in the rom list to configure per rom options
-- Press (+) AND (-) when in emulation to bring the options menu
+### Usage
+- Press the options button in the rom list to configure main options and default roms options
+- Per rom configuration is available from the "OPTIONS" ui menu
 
 ### Thanks
 - ScHlAuChi
-- devkitPro and libnx people: yellows8, plutoo, profi200, WntrMute ....
 - ScHlAuChi again :)

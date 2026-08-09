@@ -18,11 +18,7 @@ namespace c2d {
             C2DIo::create(PGBAIo::getDataPath() + "cheats");
         }
 
-#ifdef __PSP2__
-        std::string getDataPath() override {
-            return "ux0:/data/pgba/";
-        }
-#elif __PS4__
+#ifdef __PS4__
         std::string getDataPath() override {
             return "/data/pgba/";
         }
@@ -30,20 +26,6 @@ namespace c2d {
         std::string getRomFsPath() override {
             return "/data/pgba/";
         }
-#endif
-#elif __3DS__
-#ifndef NDEBUG
-        std::string getDataPath() override {
-            return "/3ds/pgba/";
-        }
-#endif
-#elif __SWITCH__
-#if __DEBUG_SVC__
-
-        std::string getDataPath() override {
-            return "/switch/pgba/";
-        }
-
 #endif
 #endif
     };

@@ -26,9 +26,6 @@ PSNESConfig::PSNESConfig(c2d::Io *io, int version) : PEMUConfig(io, "PSNES", ver
     group->addOption({"FRAMESKIP",
                       {"OFF", "AUTO", "1", "2", "3", "4", "5", "6", "7", "8", "9"},
                       0, PEMUConfig::OptId::EMU_PSNES_FRAMESKIP});
-#ifdef __VITA__
-    get(PEMUConfig::OptId::EMU_PSNES_FRAMESKIP)->setArrayIndex(3);
-#endif
     group->addOption({"TURBO_MODE", {"OFF", "ON"}, 0, PEMUConfig::OptId::EMU_PSNES_TURBO_MODE});
     group->addOption({"TURBO_FRAMESKIP",
                       {"0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "10",

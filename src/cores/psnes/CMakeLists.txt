@@ -99,32 +99,10 @@ list(APPEND PSNES_SRC ../main.cpp)
 #####################
 # PLATORM SPECIFIC
 #####################
-if (PLATFORM_VITA)
-    #####################
-    # PSP2 PLATORM
-    #####################
-    set(TITLE_ID "PSNE00001" CACHE STRING "" FORCE)
-    list(APPEND SNES9X_LDFLAGS ScePower_stub)
-elseif (PLATFORM_PS4)
+if (PLATFORM_PS4)
     set(PS4_PKG_TITLE "pSNES - Portable Snes9x")
     set(PS4_PKG_TITLE_ID "PSNE00001")
     set(PS4_PKG_VERSION "${VERSION_MAJOR}.${VERSION_MINOR}")
-elseif (PLATFORM_SWITCH)
-    #####################
-    # NX PLATORM
-    #####################
-    list(APPEND SNES9X_CFLAGS -Wno-pedantic -Wno-missing-field-initializers -Wno-format-truncation)
-elseif (PLATFORM_WINDOWS)
-    list(REMOVE_ITEM SNES9X_SRC ${CMAKE_SOURCE_DIR}/external/cores/snes9x/compat.cpp)
-elseif (PLATFORM_ANDROID)
-    #####################
-    # ANDROID PLATORM
-    #####################
-    if (ANDROID_ABI STREQUAL armeabi-v7a)
-        list(APPEND PGEN_CFLAGS -marm -mcpu=cortex-a7 -mfpu=neon
-                -ffunction-sections -fomit-frame-pointer) # fix crash with release optimizations
-    endif ()
-    list(APPEND GENESIS_CFLAGS -DHAVE_SYS_PARAM_H)
 endif ()
 
 add_executable(${PROJECT_NAME} ${PSNES_SRC} ${SNES9X_SRC} ${UNZIP_SRC} ${JMA_SRC})
