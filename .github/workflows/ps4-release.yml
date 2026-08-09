@@ -75,7 +75,7 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: pemu-ps4-pkg
-          path: *.pkg
+          path: '*.pkg'
           if-no-files-found: warning
 
       - name: Release
